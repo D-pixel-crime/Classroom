@@ -1,9 +1,12 @@
 import { Home, List } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import SideBar from "./Sidebar";
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <nav className="flex-center w-full justify-between text-white py-6 px-20 lg:text-xl border-b-2 border-b-slate-700 shadow-lg shadow-black">
@@ -25,11 +28,16 @@ const Navbar = () => {
             Home
           </Link>
         </li>
-        <li className="flex items-center gap-2">
+        <li
+          className="flex items-center gap-2 hover:cursor-pointer hover:text-slate-400 hover:-translate-y-[5%] transition"
+          onClick={() => setIsMenuOpen(true)}
+        >
           <List />
           Actions
         </li>
       </ul>
+
+      <SideBar setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
     </nav>
   );
 };

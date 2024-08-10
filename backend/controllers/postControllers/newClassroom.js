@@ -1,13 +1,21 @@
+import { Admin } from "../../models/Admin.js";
 import { Classroom } from "../../models/Classroom.js";
 
 export const newClassroom = async (req, res) => {
   const { name, dayAndTime } = req.body;
+  const adminId = req.cookies.userId;
 
   try {
-    const createdClassroom = await Classroom.create({ name, dayAndTime });
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({
+        error: "Unauthorized Access",
+      });
+    }
+
+    await Classroom.create({ name, dayAndTime });
     res.status(201).json({
       message: "Classroom Created Successfully",
-      classroom: createdClassroom,
     });
   } catch (error) {
     console.log(`Error Creating Classroom: ${error.message}`.bgRed);

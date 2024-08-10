@@ -10,8 +10,8 @@ const TeacherSchema = new Schema({
     required: true,
   },
   assigned: {
-    type: Boolean,
-    default: false,
+    type: Schema.Types.ObjectId,
+    ref: "Classroom",
   },
 });
 

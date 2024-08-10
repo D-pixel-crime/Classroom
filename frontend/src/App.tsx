@@ -3,6 +3,10 @@ import Login from "./routes/Login";
 import Home from "./routes/Home";
 import { ErrorContextProvider } from "./contexts/ErrorContextProvider";
 import { ConfirmationContextProvider } from "./contexts/ConfirmationContextProvider";
+import AddTeacher from "./routes/AddTeacher";
+import AddStudent from "./routes/AddStudent";
+import CreateClassroom from "./routes/CreateClassroom";
+import NotFound from "./routes/NotFound";
 
 function App() {
   return (
@@ -12,6 +16,13 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/add-teacher/:adminId" element={<AddTeacher />} />
+            <Route path="/add-student/:userId" element={<AddStudent />} />
+            <Route
+              path="/create-classroom/:adminId"
+              element={<CreateClassroom />}
+            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </ErrorContextProvider>

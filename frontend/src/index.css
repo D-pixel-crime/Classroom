@@ -8,3 +8,19 @@
   font-weight: 700;
   font-style: normal;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: darkslategray;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: slategray;
+  border-radius: 10px;
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}

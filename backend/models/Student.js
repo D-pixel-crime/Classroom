@@ -9,6 +9,10 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
+  classrooms: {
+    type: [Schema.Types.ObjectId],
+    ref: "Classroom",
+  },
 });
 
 export const Student = model("Student", StudentSchema);

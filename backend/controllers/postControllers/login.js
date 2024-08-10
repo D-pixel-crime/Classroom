@@ -54,6 +54,9 @@ export const login = async (req, res) => {
     res.cookie("userId", stringUserId, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
     });
+    res.cookie("email", email, {
+      maxAge: 1000 * 60 * 60 * 24 * 3,
+    });
 
     return res.status(200).json({
       success: true,

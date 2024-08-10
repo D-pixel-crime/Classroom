@@ -27,7 +27,7 @@ const MainContainer = ({ children }: mainContainerProps) => {
     <section className="bg-slate-900 min-h-screen min-w-screen relative">
       <div className=" flex flex-col gap-24 relative ">
         <Navbar />
-        <div className="content w-full h-full mb-10">{children}</div>
+        <div className="content w-full h-full mb-10 px-10">{children}</div>
       </div>
       <div
         className={`bg-red-500 rounded-md text-white border-2 border-red-500 w-fit px-2 py-1.5 flex-center gap-1 mt-10 fixed top-[40%] right-0 ${
