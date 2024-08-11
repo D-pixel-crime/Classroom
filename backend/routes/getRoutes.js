@@ -4,6 +4,8 @@ import { getClasses } from "../controllers/getControllers/getClasses.js";
 import { getEachClassDetails } from "../controllers/getControllers/getEachClassDetails.js";
 import { getTeacherForAssigning } from "../controllers/getControllers/getTeacherForAssigning.js";
 import { getStudentsForClass } from "../controllers/getControllers/getStudentsForClass.js";
+import { getAllTeachers } from "../controllers/getControllers/getAllTeachers.js";
+import { getAllStudents } from "../controllers/getControllers/getAllStudents.js";
 
 const getRouter = Router();
 
@@ -18,5 +20,9 @@ getRouter.get(
   authenticateUser,
   getStudentsForClass
 );
+
+getRouter.get("/all-teachers", authenticateUser, getAllTeachers);
+
+getRouter.get("/all-students", authenticateUser, getAllStudents);
 
 export { getRouter };

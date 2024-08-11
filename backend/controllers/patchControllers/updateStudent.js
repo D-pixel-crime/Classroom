@@ -1,29 +1,28 @@
+import { Admin } from "../../models/Admin.js";
 import { Student } from "../../models/Student.js";
 import bcrypt from "bcryptjs";
+import { Teacher } from "../../models/Teacher.js";
 
 export const updateStudent = async (req, res) => {
-  const { email, classrooms } = req.body;
-  let password = null;
-  if (req.body.password) password = req.body.password;
+  const { email, password } = req.body;
+  const { userId } = req.cookies;
 
   try {
-    let encryptedPass;
-    if (password) encryptedPass = bcrypt.hashSync(password, 10);
+    const admin = await Admin.findById(userId);
+    const teacher = await Teacher.findById(userId);
+    if (!(admin || teacher)) {
+      return res.status(404).json({ error: "Unauthorized Access" });
+    }
 
-    let updatedStudent;
-
-    if (password)
-      updatedStudent = await Student.findByIdAndUpdate(
+    if (password) {
+      const encryptedPass = bcrypt.hashSync(password, 10);
+      await Student.findByIdAndUpdate(
         req.params.id,
         { email, password: encryptedPass },
         { new: true }
       );
-    else {
-      updatedStudent = await Student.findByIdAndUpdate(
-        req.params.id,
-        { email, classrooms },
-        { new: true }
-      );
+    } else {
+      await Student.findByIdAndUpdate(req.params.id, { email }, { new: true });
     }
 
     res.status(200).json({

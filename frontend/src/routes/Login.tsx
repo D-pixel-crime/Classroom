@@ -17,7 +17,7 @@ const Login = () => {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
-    role: "student",
+    role: "",
   });
 
   const [isFilled, setIsFilled] = useState(false);
@@ -123,6 +123,9 @@ const Login = () => {
                 }}
                 value={userDetails.role}
               >
+                <option value="" disabled>
+                  Select a Role
+                </option>
                 <option value="Student">Student</option>
                 <option value="Teacher">Teacher</option>
                 <option value="Admin">Admin</option>

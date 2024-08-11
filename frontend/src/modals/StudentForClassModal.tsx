@@ -2,7 +2,6 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
   useLayoutEffect,
   useState,
 } from "react";

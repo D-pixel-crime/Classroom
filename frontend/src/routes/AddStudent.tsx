@@ -18,7 +18,7 @@ const AddStudent = () => {
   const adminId = useParams().userId;
 
   useLayoutEffect(() => {
-    if (!(userId === adminId && role === "Admin")) {
+    if (!(userId === adminId && (role === "Admin" || role === "Teacher"))) {
       window.location.href = "/";
     }
   }, []);

@@ -31,10 +31,7 @@ export const getClasses = async (req, res) => {
         if (!isPresent) {
           return res.status(404).json({ error: "Unauthorized Access" });
         }
-        for (const eachClassroom of isPresent.classrooms) {
-          const classroom = await Classroom.findById(eachClassroom, "name _id");
-          classes.push(classroom);
-        }
+        classes = await Classroom.find({ students: userId }, "name _id");
         break;
 
       default:
