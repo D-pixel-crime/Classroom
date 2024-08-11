@@ -7,6 +7,7 @@ import AddTeacher from "./routes/AddTeacher";
 import AddStudent from "./routes/AddStudent";
 import CreateClassroom from "./routes/CreateClassroom";
 import NotFound from "./routes/NotFound";
+import Classroom from "./routes/Classroom";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               element={<CreateClassroom />}
             />
             <Route path="*" element={<NotFound />} />
+            <Route path="/classroom/:userId/:classId" element={<Classroom />} />
           </Routes>
         </BrowserRouter>
       </ErrorContextProvider>

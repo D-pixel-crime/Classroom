@@ -8,15 +8,16 @@ export const updateClassroom = async (req, res) => {
       req.params.id,
       { name, dayAndTime, teacher, students },
       { new: true }
-    );
+    )
+      .populate("teacher")
+      .populate("students");
 
-    res.status(200).json({
-      message: "Classroom Updated Successfully",
-      Classroom: updatedClassroom,
+    return res.status(200).json({
+      classDetails: updatedClassroom,
     });
   } catch (error) {
     console.log(`Error Updating Classroom: ${error.message}`.bgRed);
-    res.status(500).json({
+    return res.status(500).json({
       error: `Error Updating Classroom: ${error.message}`,
     });
   }

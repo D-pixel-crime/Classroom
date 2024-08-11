@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { postRouter } from "./routes/postRoutes.js";
 import { getRouter } from "./routes/getRoutes.js";
 import morgan from "morgan";
+import { patchRouter } from "./routes/patchRouter.js";
 
 const port = 3000;
 const app = express();
@@ -25,6 +26,7 @@ app.use(morgan("short"));
 
 app.use("/post", postRouter);
 app.use("/get", getRouter);
+app.use("/patch", patchRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

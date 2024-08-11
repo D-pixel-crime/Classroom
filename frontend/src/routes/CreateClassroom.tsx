@@ -189,7 +189,7 @@ const CreateClassroom = () => {
                     >
                       {Array.from({ length: 24 }).map((_, i) => (
                         <option
-                          id={`optionFrom${index + 1}`}
+                          key={`optionFrom${index + 1}`}
                           value={`${i}:00 hrs`}
                         >
                           {i}:00 hrs
@@ -224,7 +224,7 @@ const CreateClassroom = () => {
                     >
                       {Array.from({ length: 24 }).map((_, i) => (
                         <option
-                          id={`optionTo${index + 1}`}
+                          key={`optionTo${index + 1}`}
                           value={`${i}:00 hrs`}
                         >
                           {i}:00 hrs

@@ -20,7 +20,7 @@ export const newClassroom = async (req, res) => {
   } catch (error) {
     console.log(`Error Creating Classroom: ${error.message}`.bgRed);
     res.status(500).json({
-      message: `Error Creating Classroom: ${error.message}`,
+      error: `Error Creating Classroom: ${error.message}`,
     });
   }
 };
