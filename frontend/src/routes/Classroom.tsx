@@ -3,7 +3,7 @@ import MainContainer from "../containers/MainContainer";
 import { useParams } from "react-router-dom";
 import { ErrorContext } from "../contexts/ErrorContextProvider";
 import axios from "axios";
-import { Plus, Trash } from "lucide-react";
+import { Plus, PlusCircle, Trash } from "lucide-react";
 import { ConfirmationContext } from "../contexts/ConfirmationContextProvider";
 import AssignTeacherModal from "../modals/AssignTeacherModal";
 import Cookies from "js-cookie";
@@ -11,7 +11,7 @@ import StudentForClassModal from "../modals/StudentForClassModal";
 
 interface classDetailsProps {
   name: string;
-  dayAndTime: [];
+  dayAndTime: { day: string; to: string; from: string }[];
   teacher: { email: string; _id: string; assigned: string };
   students: { email: string; _id: string; classrooms: [string] }[];
 }
@@ -35,8 +35,12 @@ const Classroom = () => {
           { withCredentials: true }
         );
 
-        console.log(data);
-        setClassDetails(data.classDetails);
+        setClassDetails({
+          name: data.classDetails.name,
+          dayAndTime: data.classDetails.dayAndTime,
+          teacher: data.classDetails.teacher,
+          students: data.classDetails.students,
+        });
       } catch (error: any) {
         setWhatIsTheError(
           error.response?.data?.error ||
@@ -164,7 +168,7 @@ const Classroom = () => {
         <h1 className="border-b-2 border-b-slate-600 pb-2 flex items-center justify-between">
           {role === "Admin" ? (
             <input
-              className="text-4xl border-b-2 border-slate-400 px-2 py-1.5 bg-transparent text-slate-400 outline-none bg-gradient-to-tr from-cyan-500 via-purple-500 to-yellow-500 bg-clip-text text-transparent w-fit"
+              className="text-4xl border-b-2 border-slate-400 px-2 py-1.5 bg-transparent outline-none text-violet-500 w-fit"
               value={classDetails?.name}
               onChange={(e) => {
                 if (classDetails) {
@@ -231,6 +235,172 @@ const Classroom = () => {
               </button>
             </div>
           )}
+        </div>
+        <div className="mt-16">
+          <div className="border-b-2 border-slate-600 pb-2 my-6 flex items-center gap-2">
+            <h2 className="text-2xl">Timings </h2>
+            {role === "Admin" && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (classDetails) {
+                    setClassDetails({
+                      ...classDetails,
+                      dayAndTime: [
+                        ...classDetails.dayAndTime,
+                        { day: "", from: "", to: "" },
+                      ],
+                    });
+                  }
+                }}
+                className="w-fit border-2 rounded-md p-1.5 bg-blue-500 border-blue-500 hover:text-blue-500 hover:bg-transparent"
+              >
+                <PlusCircle />
+              </button>
+            )}
+          </div>
+          <div>
+            {classDetails?.dayAndTime?.length! < 1 ? (
+              <p className="text-slate-400 text-xl">No Timings Set</p>
+            ) : role === "Admin" ? (
+              classDetails?.dayAndTime.map((eachDayAndTime, index) => (
+                <div id={`day${index + 1}`} className="flex-center gap-4">
+                  <div className="flex flex-col">
+                    <label htmlFor={`day${index + 1}`}>Day</label>
+                    <select
+                      name="day"
+                      id={`day${index + 1}`}
+                      className="bg-black rounded-md border-2 shadow-md shadow-pink-800 border-pink-800 px-1.5 py-2 mb-4 cursor-pointer text-pink-400 outline-none h-fit"
+                      value={eachDayAndTime.day}
+                      onChange={(e) => {
+                        const newDayAndTime = classDetails.dayAndTime.map(
+                          (each, i) => {
+                            if (i === index) {
+                              return {
+                                ...each,
+                                day: e.target.value,
+                              };
+                            }
+                            return each;
+                          }
+                        );
+                        setClassDetails({
+                          ...classDetails,
+                          dayAndTime: newDayAndTime,
+                        });
+                      }}
+                    >
+                      <option value="Sunday">Sunday</option>
+                      <option value="Monday">Monday</option>
+                      <option value="Tuesday">Tuesday</option>
+                      <option value="Wednesday">Wednesday</option>
+                      <option value="Thursday">Thursday</option>
+                      <option value="Friday">Friday</option>
+                      <option value="Saturday">Saturday</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor={`from${index + 1}`}>From</label>
+                    <select
+                      name="from"
+                      id={`from${index + 1}`}
+                      className="bg-black rounded-md border-2 shadow-md shadow-pink-800 border-pink-800 px-1.5 py-2 mb-4 cursor-pointer text-pink-400 outline-none h-fit"
+                      value={eachDayAndTime.from}
+                      onChange={(e) => {
+                        const newDayAndTime = classDetails.dayAndTime.map(
+                          (each, i) => {
+                            if (i === index) {
+                              return {
+                                ...each,
+                                from: e.target.value,
+                              };
+                            }
+                            return each;
+                          }
+                        );
+                        setClassDetails({
+                          ...classDetails,
+                          dayAndTime: newDayAndTime,
+                        });
+                      }}
+                    >
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <option
+                          key={`optionFrom${index + 1}`}
+                          value={`${i}:00 hrs`}
+                        >
+                          {i}:00 hrs
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor={`to${index + 1}`}>To</label>
+                    <select
+                      name="to"
+                      id={`to${index + 1}`}
+                      className="bg-black rounded-md border-2 shadow-md shadow-pink-800 border-pink-800 px-1.5 py-2 mb-4 cursor-pointer text-pink-400 outline-none h-fit"
+                      value={eachDayAndTime.to}
+                      onChange={(e) => {
+                        const newDayAndTime = classDetails.dayAndTime.map(
+                          (each, i) => {
+                            if (i === index) {
+                              return {
+                                ...each,
+                                to: e.target.value,
+                              };
+                            }
+                            return each;
+                          }
+                        );
+                        setClassDetails({
+                          ...classDetails,
+                          dayAndTime: newDayAndTime,
+                        });
+                      }}
+                    >
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <option
+                          key={`optionTo${index + 1}`}
+                          value={`${i}:00 hrs`}
+                        >
+                          {i}:00 hrs
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setClassDetails({
+                        ...classDetails,
+                        dayAndTime: classDetails.dayAndTime.filter(
+                          (_, i) => i !== index
+                        ),
+                      });
+                    }}
+                    className="w-fit border-2 rounded-md p-1.5 bg-red-500 border-red-500 hover:text-red-500 hover:bg-transparent"
+                  >
+                    <Trash />
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="grid grid-cols-4 gap-4">
+                {classDetails?.dayAndTime.map((eachDayAndTime, index) => (
+                  <div
+                    key={`eachDayAndTime${index + 1}`}
+                    className="border-2 border-slate-600 mb-2 shadow-md shadow-slate-500 rounded-md px-2 py-2 flex items-center justify-between"
+                  >
+                    <h1>{eachDayAndTime.day}</h1>
+                    <p className="text-sm text-slate-400">
+                      {eachDayAndTime.from} - {eachDayAndTime.to}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <div className="px-10 mt-10">
           <div className="border-b-2 border-slate-600 pb-2 my-6 flex items-center justify-between">

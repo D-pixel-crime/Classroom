@@ -23,6 +23,7 @@ Classroom is a platform where Admins can create classrooms, teacher and student 
 - **Backend**: Node.js, Express.js, hosted on Render
 - **Database**: MongoDB
 - **Language**: JavaScript
+- **Security**: JWT Authentication
 
 ## Getting Started
 

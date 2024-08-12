@@ -46,14 +46,10 @@ const CreateClassroom = () => {
       }
     }
 
-    const dayAndTime = classroom.dayAndTime.map(({ day, from, to }) => {
-      return { day: day, time: `${from} - ${to}` };
-    });
-
     try {
       await axios.post(
         `${import.meta.env.VITE_CLASSROOM_BACKEND_URI}/post/new-classroom`,
-        { name: classroom.name, dayAndTime },
+        { name: classroom.name, dayAndTime: classroom.dayAndTime },
         { withCredentials: true }
       );
 

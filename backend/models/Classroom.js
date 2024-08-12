@@ -12,7 +12,11 @@ const ClassroomSchema = new Schema({
           type: String,
           required: true,
         },
-        time: {
+        from: {
+          type: String,
+          required: true,
+        },
+        to: {
           type: String,
           required: true,
         },
