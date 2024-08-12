@@ -159,6 +159,8 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }: sidebarProps) => {
                 Cookies.remove("role");
                 Cookies.remove("userId");
                 Cookies.remove("token");
+
+                window.location.href = "/login";
               }}
               className="flex-center gap-2 text-white border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"
             >
