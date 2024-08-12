@@ -49,21 +49,25 @@ export const login = async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
+      domain: process.env.CLASSROOM_FRONTEND_URI,
     });
     res.cookie("role", role, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
+      domain: process.env.CLASSROOM_FRONTEND_URI,
     });
     res.cookie("userId", stringUserId, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
+      domain: process.env.CLASSROOM_FRONTEND_URI,
     });
     res.cookie("email", email, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
+      domain: process.env.CLASSROOM_FRONTEND_URI,
     });
 
     return res.status(200).json({
