@@ -44,6 +44,10 @@ const Login = () => {
       );
 
       if (data.success) {
+        Cookies.set("userId", data.userId, { expires: 3 });
+        Cookies.set("token", data.token, { expires: 3 });
+        Cookies.set("role", data.role, { expires: 3 });
+        Cookies.set("email", data.email, { expires: 3 });
         setUserDetails({ email: "", password: "", role: "" });
         setIsSuccess(true);
         setTimeout(() => {
