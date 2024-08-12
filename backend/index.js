@@ -8,7 +8,7 @@ import morgan from "morgan";
 import { patchRouter } from "./routes/patchRouter.js";
 import { deleteRouter } from "./routes/deleteRoutes.js";
 
-const port = 3000;
+const port = process.env.PORT;
 const app = express();
 
 app.use(
