@@ -171,7 +171,7 @@ const ManageStudents = ({ setIsOpen }: paramProps) => {
             <div className="flex flex-col gap-1 w-full">
               <label htmlFor="password">Password</label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Change the password"

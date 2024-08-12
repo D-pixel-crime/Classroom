@@ -29,7 +29,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li
-          className="flex items-center gap-2 hover:cursor-pointer hover:text-slate-400 hover:-translate-y-[5%] transition"
+          className="flex items-center gap-2 hover:cursor-pointer text-amber-300 hover:text-amber-600 hover:-translate-y-[5%] transition"
           onClick={() => setIsMenuOpen(true)}
         >
           <List />

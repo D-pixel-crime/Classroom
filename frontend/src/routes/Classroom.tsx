@@ -63,11 +63,7 @@ const Classroom = () => {
         { withCredentials: true }
       );
 
-      setIsConfirmed(true);
-      setTimeout(() => {
-        setIsConfirmed(false);
-        window.location.reload();
-      }, 3000);
+      window.location.reload();
     } catch (error: any) {
       setWhatIsTheError(
         error.response?.data?.error ||
@@ -104,46 +100,110 @@ const Classroom = () => {
     }
   };
 
+  const deleteClassroom = async () => {
+    try {
+      await axios.delete(
+        `${
+          import.meta.env.VITE_CLASSROOM_BACKEND_URI
+        }/delete/delete-classroom/${classId}`,
+        { withCredentials: true }
+      );
+
+      window.location.href = "/";
+    } catch (error: any) {
+      setWhatIsTheError(
+        error.response?.data?.error ||
+          error.message ||
+          "An Unexpected Error Occurred"
+      );
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  };
+
+  const updateClassroom = async () => {
+    const toSendData = {
+      name: classDetails?.name,
+      teacher: classDetails?.teacher._id,
+      dayAndTime: classDetails?.dayAndTime,
+      students: classDetails?.students.map((eachStudent) => eachStudent._id),
+    };
+
+    try {
+      await axios.patch(
+        `${
+          import.meta.env.VITE_CLASSROOM_BACKEND_URI
+        }/patch/update-classroom/${classId}`,
+        toSendData,
+        { withCredentials: true }
+      );
+
+      setIsConfirmed(true);
+      setTimeout(() => {
+        setIsConfirmed(false);
+        window.location.reload();
+      }, 3000);
+    } catch (error: any) {
+      setWhatIsTheError(
+        error.response?.data?.error ||
+          error.message ||
+          "An Unexpected Error Occurred"
+      );
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  };
+
   return (
     <MainContainer>
       <div className="text-white flex flex-col gap-10">
         <h1 className="border-b-2 border-b-slate-600 pb-2 flex items-center justify-between">
-          <p className="text-4xl">{classDetails?.name}</p>
-          {role === "Admin" && (
-            <button
-              onClick={async (e) => {
-                e.preventDefault();
-                try {
-                  await axios.delete(
-                    `${
-                      import.meta.env.VITE_CLASSROOM_BACKEND_URI
-                    }/delete/delete-classroom/${classId}`,
-                    { withCredentials: true }
-                  );
-
-                  window.location.href = "/";
-                } catch (error: any) {
-                  setWhatIsTheError(
-                    error.response?.data?.error ||
-                      error.message ||
-                      "An Unexpected Error Occurred"
-                  );
-                  setIsError(true);
-                  setTimeout(() => {
-                    setIsError(false);
-                  }, 3000);
+          {role === "Admin" ? (
+            <input
+              className="text-4xl border-b-2 border-slate-400 px-2 py-1.5 bg-transparent text-slate-400 outline-none bg-gradient-to-tr from-cyan-500 via-purple-500 to-yellow-500 bg-clip-text text-transparent w-fit"
+              value={classDetails?.name}
+              onChange={(e) => {
+                if (classDetails) {
+                  setClassDetails({ ...classDetails, name: e.target.value });
                 }
               }}
-              className="flex-center border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"
-            >
-              Delete Classroom
-            </button>
+            />
+          ) : (
+            <h1 className="text-4xl bg-gradient-to-tr from-blue-500 via-cyan-500 to-yellow-500 bg-clip-text text-transparent w-fit">
+              {classDetails?.name}
+            </h1>
+          )}
+          {role === "Admin" && (
+            <div className="flex-center gap-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  updateClassroom();
+                }}
+                className="flex-center border-2 rounded-md border-fuchsia-500 bg-fuchsia-500 hover:text-fuchsia-400 hover:bg-transparent px-2 py-1.5"
+              >
+                Update
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteClassroom();
+                }}
+                className="flex-center border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"
+              >
+                Delete Classroom
+              </button>
+            </div>
           )}
         </h1>
         <div className="flex items-center justify-between px-10">
           <div className="flex-center">
             <h2 className="text-2xl">Teacher: </h2>
-            <p className="ml-5 text-slate-400">
+            <p className="ml-5 text-cyan-400 text-lg">
               {classDetails?.teacher
                 ? classDetails.teacher.email
                 : "Not Assigned"}
@@ -173,8 +233,8 @@ const Classroom = () => {
           )}
         </div>
         <div className="px-10 mt-10">
-          <div className="border-b-2 border-slate-600 pb-2 mb-6 flex items-center justify-between">
-            <h2 className="text-2xl">Students: </h2>
+          <div className="border-b-2 border-slate-600 pb-2 my-6 flex items-center justify-between">
+            <h2 className="text-2xl">Students </h2>
             {(role === "Admin" || role === "Teacher") && (
               <button
                 onClick={(e) => {
@@ -195,13 +255,13 @@ const Classroom = () => {
               </p>
             )}
             {classDetails?.students?.length! > 0 && (
-              <ul className="list-inside grid grid-cols-3 gap-4">
+              <ul className="list-inside grid grid-cols-4 gap-4">
                 {classDetails?.students.map((eachStudent) => (
                   <li
                     key={eachStudent._id}
-                    className="border-2 border-amber-500 rounded-md shadow-md shadow-amber-500 px-1 py-3 flex items-center justify-around"
+                    className="border-2 mb-2 border-green-800 rounded-md shadow-md shadow-green-800 px-2 py-3 flex items-center justify-between"
                   >
-                    {eachStudent.email}
+                    {eachStudent.email.substring(0, 25)}
                     {(role === "Admin" || role === "Teacher") && (
                       <button
                         onClick={(e) => {

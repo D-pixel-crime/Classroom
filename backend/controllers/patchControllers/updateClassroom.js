@@ -17,12 +17,10 @@ export const updateClassroom = async (req, res) => {
       req.params.id,
       { name, dayAndTime, teacher, students },
       { new: true }
-    )
-      .populate("teacher")
-      .populate("students");
+    );
 
     return res.status(200).json({
-      classDetails: updatedClassroom,
+      message: "Classroom updated successfully",
     });
   } catch (error) {
     console.log(`Error Updating Classroom: ${error.message}`.bgRed);

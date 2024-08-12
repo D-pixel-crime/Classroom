@@ -77,7 +77,7 @@ const AddTeacher = () => {
     <MainContainer>
       <div className="text-white w-full flex flex-col gap-16">
         <div className="flex-col flex gap-5 items-center w-full">
-          <h1 className="text-5xl bg-gradient-to-tr from-cyan-500 via-yellow-500 to-red-500 bg-clip-text w-fit text-transparent">
+          <h1 className="text-5xl bg-gradient-to-tr from-pink-500 via-yellow-500 to-red-500 bg-clip-text w-fit text-transparent">
             Add Teachers
           </h1>
           <p className="text-slate-500">Create new accounts for teachers 🧑‍🏫</p>

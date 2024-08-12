@@ -46,9 +46,11 @@ const Home = () => {
     <MainContainer>
       <div className="w-full text-white">
         <div className="flex flex-col gap-5">
-          <h1 className="text-4xl border-b-2 border-b-slate-600 pb-2">
-            Classrooms
-          </h1>
+          <div className="text-6xl border-b-2 border-b-slate-600 pb-2 ">
+            <h1 className="bg-gradient-to-r from-blue-500 via-cyan-500 to-yellow-500 bg-clip-text text-transparent w-fit">
+              Classrooms
+            </h1>
+          </div>
           <Suspense
             fallback={<p className="text-xl text-green-500">Loading...</p>}
           >
@@ -63,12 +65,12 @@ const Home = () => {
                     <Link
                       key={eachClass._id}
                       to={`/classroom/${userId}/${eachClass._id}`}
-                      className="w-fit border-2 border-green-700 rounded-md px-4 py-5 flex flex-col shadow-lg shadow-green-800 hover:-translate-y-[5%] hover:scale-105 transition-transform"
+                      className="border-2 border-green-700 bg-green-900/40 rounded-md px-4 py-5 flex flex-col shadow-lg shadow-green-800 hover:-translate-y-[5%] hover:scale-105 transition-transform"
                     >
                       <p className="border-b text-slate-400 border-b-slate-700 mb-4">
                         Name
                       </p>
-                      <p className="text-lg">{eachClass.name}</p>
+                      <p className="text-lg text-green-400">{eachClass.name}</p>
                     </Link>
                   ))}
                 </div>
