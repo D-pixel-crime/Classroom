@@ -49,25 +49,25 @@ export const login = async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
-      domain: process.env.CLASSROOM_FRONTEND_URI,
+      domain: ".classroom-deepak.vercel.app",
     });
     res.cookie("role", role, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
-      domain: process.env.CLASSROOM_FRONTEND_URI,
+      domain: ".classroom-deepak.vercel.app",
     });
     res.cookie("userId", stringUserId, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
-      domain: process.env.CLASSROOM_FRONTEND_URI,
+      domain: ".classroom-deepak.vercel.app",
     });
     res.cookie("email", email, {
       maxAge: 1000 * 60 * 60 * 24 * 3,
       sameSite: "None",
       secure: true,
-      domain: process.env.CLASSROOM_FRONTEND_URI,
+      domain: ".classroom-deepak.vercel.app",
     });
 
     return res.status(200).json({
