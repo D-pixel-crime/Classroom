@@ -81,11 +81,64 @@ const Classroom = () => {
     }
   };
 
+  const unassignTeacher = async () => {
+    try {
+      await axios.patch(
+        `${
+          import.meta.env.VITE_CLASSROOM_BACKEND_URI
+        }/patch/unassign-teacher/${classId}`,
+        { teacherId: classDetails?.teacher },
+        { withCredentials: true }
+      );
+      window.location.reload();
+    } catch (error: any) {
+      setWhatIsTheError(
+        error.response?.data?.error ||
+          error.message ||
+          "An Unexpected Error Occurred"
+      );
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+    }
+  };
+
   return (
     <MainContainer>
       <div className="text-white flex flex-col gap-10">
-        <h1 className="text-4xl border-b-2 border-b-slate-600 pb-2">
-          {classDetails?.name}
+        <h1 className="border-b-2 border-b-slate-600 pb-2 flex items-center justify-between">
+          <p className="text-4xl">{classDetails?.name}</p>
+          {role === "Admin" && (
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                try {
+                  await axios.delete(
+                    `${
+                      import.meta.env.VITE_CLASSROOM_BACKEND_URI
+                    }/delete/delete-classroom/${classId}`,
+                    { withCredentials: true }
+                  );
+
+                  window.location.href = "/";
+                } catch (error: any) {
+                  setWhatIsTheError(
+                    error.response?.data?.error ||
+                      error.message ||
+                      "An Unexpected Error Occurred"
+                  );
+                  setIsError(true);
+                  setTimeout(() => {
+                    setIsError(false);
+                  }, 3000);
+                }
+              }}
+              className="flex-center border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"
+            >
+              Delete Classroom
+            </button>
+          )}
         </h1>
         <div className="flex items-center justify-between px-10">
           <div className="flex-center">
@@ -97,15 +150,26 @@ const Classroom = () => {
             </p>
           </div>
           {role === "Admin" && (
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setTeacherOpen(true);
-              }}
-              className="flex-center border-2 rounded-md border-purple-500 bg-purple-500 hover:text-purple-400 hover:bg-transparent px-2 py-1.5"
-            >
-              Assign/Change
-            </button>
+            <div className="flex-center gap-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  unassignTeacher();
+                }}
+                className="flex-center border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"
+              >
+                Unassign
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTeacherOpen(true);
+                }}
+                className="flex-center border-2 rounded-md border-purple-500 bg-purple-500 hover:text-purple-400 hover:bg-transparent px-2 py-1.5"
+              >
+                Assign/Change
+              </button>
+            </div>
           )}
         </div>
         <div className="px-10 mt-10">

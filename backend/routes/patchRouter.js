@@ -5,6 +5,7 @@ import { updateTeacher } from "../controllers/patchControllers/updateTeacher.js"
 import { updateClassroom } from "../controllers/patchControllers/updateClassroom.js";
 import { changeTeacherForClass } from "../controllers/patchControllers/changeTeacherForClass.js";
 import { removeStudentFromClass } from "../controllers/patchControllers/removeStudentFromClass.js";
+import { unassignTeacherFromClass } from "../controllers/patchControllers/unassignTeacherFromClass.js";
 
 const patchRouter = Router();
 
@@ -20,6 +21,12 @@ patchRouter.patch(
   "/remove-student-from-class",
   authenticateUser,
   removeStudentFromClass
+);
+
+patchRouter.patch(
+  "/unassign-teacher/:classId",
+  authenticateUser,
+  unassignTeacherFromClass
 );
 
 export { patchRouter };
