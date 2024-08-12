@@ -19,6 +19,14 @@ interface sidebarProps {
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+type CookieAttributes = {
+  expires?: number | Date;
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  sameSite?: "Strict" | "Lax" | "None";
+};
+
 const SideBar = ({ isMenuOpen, setIsMenuOpen }: sidebarProps) => {
   const role = Cookies.get("role");
   const email = Cookies.get("email");
@@ -155,11 +163,14 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }: sidebarProps) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                Cookies.remove("email");
-                Cookies.remove("role");
-                Cookies.remove("userId");
-                Cookies.remove("token");
-
+                const cookieOptions: CookieAttributes = {
+                  secure: true,
+                  sameSite: "None",
+                };
+                Cookies.remove("email", cookieOptions);
+                Cookies.remove("role", cookieOptions);
+                Cookies.remove("userId", cookieOptions);
+                Cookies.remove("token", cookieOptions);
                 window.location.href = "/login";
               }}
               className="flex-center gap-2 text-white border-2 rounded-md border-red-500 bg-red-500 hover:text-red-400 hover:bg-transparent px-2 py-1.5"

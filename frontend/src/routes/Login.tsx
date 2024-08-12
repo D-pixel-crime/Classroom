@@ -7,7 +7,6 @@ const Login = () => {
   useLayoutEffect(() => {
     const userId = Cookies.get("userId");
     const token = Cookies.get("token");
-    console.log(userId, token);
 
     if (userId && token) {
       window.location.href = "/";
